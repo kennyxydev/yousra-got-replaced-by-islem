@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تعاهد | الاتفاقية 2.0</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700;900&family=Amiri+Quran&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #c9a84c;
+  --gold-light: #f0d080;
+  --gold-dim: #8a6d2a;
+  --dark: #0d0b07;
+  --dark2: #181410;
+  --dark3: #221e14;
+  --cream: #f5eed8;
+  --cream2: #ede0b8;
+  --red: #c0392b;
+  --green: #1a7a4a;
+  --text: #e8d9b0;
+  --text-dim: #a09060;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Tajawal', sans-serif;
+  background: var(--dark);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+  cursor: default;
+}
+
+/* ─── PARTICLE CANVAS ─── */
+#particles { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+
+/* ─── CUSTOM CURSOR ─── */
+.cursor {
+  width: 20px; height: 20px;
+  border: 1.5px solid var(--gold);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.15s, background 0.15s;
+  transform: translate(-50%, -50%);
+}
+.cursor.click { transform: translate(-50%, -50%) scale(1.8); background: #c9a84c33; }
+
+/* ─── HERO ─── */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+  z-index: 1;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 60% at 50% 40%, #c9a84c18 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.scroll-line {
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 1px;
+  height: 0;
+  background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+  animation: growLine 2s ease forwards 0.5s;
+}
+@keyframes growLine {
+  to { height: 120px; }
+}
+
+.hero-eyebrow {
+  font-size: 0.7rem;
+  letter-spacing: 6px;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  animation: fadeUp 0.8s ease forwards 0.8s;
+}
+
+.hero-title {
+  font-family: 'Amiri', serif;
+  font-size: clamp(3rem, 10vw, 7rem);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--cream);
+  opacity: 0;
+  animation: fadeUp 0.8s ease forwards 1s;
+  text-shadow: 0 0 80px #c9a84c44;
+}
+
+.hero-title span {
+  color: var(--gold);
+  display: block;
+}
+
+.hero-sub {
+  font-size: 1rem;
+  color: var(--text-dim);
+  margin-top: 1.2rem;
+  font-style: italic;
+  opacity: 0;
+  animation: fadeUp 0.8s ease forwards 1.2s;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #c9a84c18;
+  border: 1px solid #c9a84c44;
+  border-radius: 100px;
+  padding: 6px 20px;
+  font-size: 0.8rem;
+  color: var(--gold);
+  margin-top: 2rem;
+  opacity: 0;
+  animation: fadeUp 0.8s ease forwards 1.4s;
+}
+
+.scroll-cta {
+  position: absolute;
+  bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-dim);
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  opacity: 0;
+  animation: fadeUp 0.8s ease forwards 2s;
+}
+
+.scroll-arrow {
+  width: 1px; height: 40px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+  animation: bounce 2s infinite;
+}
+@keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(8px)} }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── NAV DOTS ─── */
+.nav-dots {
+  position: fixed;
+  left: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 100;
+}
+.nav-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  border: 1px solid var(--gold);
+  cursor: pointer;
+  transition: all 0.3s;
+  background: transparent;
+}
+.nav-dot.active { background: var(--gold); transform: scale(1.4); }
+
+/* ─── SECTIONS ─── */
+.section {
+  position: relative;
+  z-index: 1;
+  padding: 5rem 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.section-label {
+  font-size: 0.65rem;
+  letter-spacing: 5px;
+  color: var(--gold-dim);
+  text-transform: uppercase;
+  margin-bottom: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-label::before {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold-dim));
+}
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to left, transparent, var(--gold-dim));
+}
+
+.section-title {
+  font-family: 'Amiri', serif;
+  font-size: 2.2rem;
+  color: var(--cream);
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+/* ─── RULES CARDS ─── */
+.rules-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+@media (max-width: 600px) { .rules-grid { grid-template-columns: 1fr; } }
+
+.rules-col-title {
+  font-size: 0.8rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 10px 16px;
+  border-radius: 6px 6px 0 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+}
+
+.rules-col-title.forbidden { background: #c0392b22; color: #e74c3c; border: 1px solid #c0392b44; }
+.rules-col-title.allowed { background: #1a7a4a22; color: #2ecc71; border: 1px solid #1a7a4a44; }
+
+.rules-col {
+  border-radius: 0 0 12px 12px;
+  overflow: hidden;
+}
+
+.rule-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 16px;
+  border-bottom: 1px solid #ffffff08;
+  cursor: pointer;
+  transition: background 0.25s, transform 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.rule-item::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: currentColor;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.rule-item:hover { transform: translateX(-4px); }
+
+.forbidden .rule-item { background: #1a0a08; }
+.forbidden .rule-item:hover { background: #2d1210; }
+.allowed .rule-item { background: #081a10; }
+.allowed .rule-item:hover { background: #0d2a18; }
+
+.rule-emoji { font-size: 1.3rem; flex-shrink: 0; margin-top: 1px; filter: drop-shadow(0 0 6px currentColor); }
+.rule-text { font-size: 0.9rem; line-height: 1.6; color: var(--text); }
+.rule-sub { font-size: 0.75rem; color: var(--text-dim); margin-top: 2px; }
+
+/* ─── TOOLTIP ─── */
+.tooltip {
+  position: fixed;
+  background: var(--dark3);
+  border: 1px solid var(--gold-dim);
+  color: var(--cream);
+  font-size: 0.8rem;
+  padding: 8px 14px;
+  border-radius: 8px;
+  pointer-events: none;
+  z-index: 1000;
+  max-width: 220px;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.2s;
+  line-height: 1.5;
+}
+.tooltip.show { opacity: 1; }
+
+/* ─── COUNTER ─── */
+.counter-section {
+  text-align: center;
+  padding: 3rem 2rem;
+  position: relative;
+  z-index: 1;
+  border-top: 1px solid #c9a84c22;
+  border-bottom: 1px solid #c9a84c22;
+  margin: 2rem 0;
+}
+
+.counter-title {
+  font-size: 0.75rem;
+  letter-spacing: 4px;
+  color: var(--gold-dim);
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+
+.counters {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  flex-wrap: wrap;
+}
+
+.counter-item { text-align: center; }
+.counter-num {
+  font-family: 'Amiri', serif;
+  font-size: 3rem;
+  color: var(--gold);
+  display: block;
+  line-height: 1;
+}
+.counter-label { font-size: 0.75rem; color: var(--text-dim); margin-top: 6px; }
+
+/* ─── PROGRESS BAR ─── */
+.progress-section {
+  position: relative; z-index: 1;
+  padding: 2rem;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.progress-bar-wrap {
+  background: #ffffff0a;
+  border: 1px solid #c9a84c22;
+  border-radius: 100px;
+  height: 8px;
+  overflow: hidden;
+  margin: 1rem 0 0.4rem;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  border-radius: 100px;
+  background: linear-gradient(to left, var(--gold-light), var(--gold));
+  width: 0;
+  transition: width 1.2s cubic-bezier(0.4,0,0.2,1);
+}
+
+.progress-label { font-size: 0.75rem; color: var(--text-dim); text-align: center; }
+.progress-title { font-size: 0.85rem; color: var(--cream); margin-bottom: 4px; }
+
+/* ─── AGREE SECTION ─── */
+.agree-section {
+  position: relative;
+  z-index: 1;
+  padding: 4rem 2rem 6rem;
+  text-align: center;
+}
+
+.agree-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 50% 60% at 50% 50%, #c9a84c0d 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.agree-title {
+  font-family: 'Amiri', serif;
+  font-size: 1.8rem;
+  color: var(--cream);
+  margin-bottom: 0.5rem;
+}
+
+.agree-sub {
+  color: var(--text-dim);
+  font-size: 0.9rem;
+  margin-bottom: 2.5rem;
+  font-style: italic;
+}
+
+.agree-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--gold);
+  color: var(--dark);
+  border: none;
+  border-radius: 8px;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 900;
+  padding: 1rem 3rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 1px;
+}
+
+.agree-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 30%, #ffffff33 50%, transparent 70%);
+  transform: translateX(-100%);
+  transition: transform 0.5s;
+}
+
+.agree-btn:hover { transform: translateY(-3px); box-shadow: 0 20px 60px #c9a84c44; }
+.agree-btn:hover::before { transform: translateX(100%); }
+.agree-btn:active { transform: scale(0.97) translateY(0); }
+
+.agree-btn.agreed {
+  background: var(--green);
+  color: #e0ffe0;
+  box-shadow: 0 0 40px #1a7a4a44;
+}
+
+/* ─── MEME SECTION ─── */
+.meme-section {
+  position: relative; z-index: 1;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 2rem 4rem;
+  display: none;
+  animation: fadeUp 0.6s ease forwards;
+}
+.meme-section.visible { display: block; }
+
+.meme-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.meme-card {
+  background: var(--dark2);
+  border: 1px solid #c9a84c33;
+  border-radius: 16px;
+  padding: 2.5rem 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  transition: transform 0.3s;
+}
+
+.meme-card::before {
+  content: '';
+  position: absolute;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: conic-gradient(transparent 0deg, #c9a84c11 90deg, transparent 180deg);
+  animation: rotateBg 8s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes rotateBg {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.meme-card-inner { position: relative; z-index: 1; }
+
+.meme-big-emoji {
+  font-size: 5rem;
+  display: block;
+  margin-bottom: 1rem;
+  animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1) forwards;
+}
+@keyframes popIn {
+  from { transform: scale(0); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.meme-text {
+  font-family: 'Amiri', serif;
+  font-size: 1.3rem;
+  line-height: 1.9;
+  color: var(--cream);
+  white-space: pre-line;
+}
+
+.meme-author {
+  font-size: 0.75rem;
+  color: var(--gold-dim);
+  margin-top: 1rem;
+  font-style: italic;
+}
+
+.meme-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.meme-btn {
+  flex: 1;
+  max-width: 200px;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  border: 1px solid #c9a84c44;
+  background: transparent;
+  color: var(--gold);
+  font-family: 'Tajawal', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.meme-btn:hover { background: #c9a84c22; transform: translateY(-2px); }
+.meme-btn:active { transform: scale(0.96); }
+.meme-btn.primary { background: var(--gold); color: var(--dark); border-color: var(--gold); }
+.meme-btn.primary:hover { background: var(--gold-light); }
+
+.meme-mini-row {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.meme-mini-row::-webkit-scrollbar { display: none; }
+
+.meme-mini {
+  flex-shrink: 0;
+  background: var(--dark2);
+  border: 1px solid #c9a84c22;
+  border-radius: 10px;
+  padding: 1rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: 120px;
+}
+.meme-mini:hover { border-color: var(--gold); transform: translateY(-3px); }
+.meme-mini.active { border-color: var(--gold); background: #c9a84c15; }
+.meme-mini .mini-emoji { font-size: 2rem; display: block; margin-bottom: 4px; }
+.meme-mini .mini-label { font-size: 0.7rem; color: var(--text-dim); line-height: 1.4; }
+
+/* ─── CONFETTI ─── */
+.confetti-piece {
+  position: fixed;
+  width: 8px; height: 8px;
+  border-radius: 2px;
+  pointer-events: none;
+  z-index: 9000;
+  animation: confettiFall linear forwards;
+}
+@keyframes confettiFall {
+  to { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+}
+
+/* ─── FOOTER ─── */
+.site-footer {
+  position: relative; z-index: 1;
+  text-align: center;
+  padding: 2rem;
+  border-top: 1px solid #c9a84c15;
+  color: var(--text-dim);
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+}
+
+/* ─── FLOATING EMOJIS ─── */
+.float-emoji {
+  position: fixed;
+  font-size: 1.5rem;
+  pointer-events: none;
+  z-index: 50;
+  animation: floatAway 3s ease forwards;
+}
+@keyframes floatAway {
+  0% { opacity: 1; transform: translateY(0) scale(1); }
+  100% { opacity: 0; transform: translateY(-120px) scale(0.5); }
+}
+
+/* ─── REVEAL ANIMATIONS ─── */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.in { opacity: 1; transform: none; }
+
+/* ─── TOAST ─── */
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--dark3);
+  border: 1px solid var(--gold-dim);
+  color: var(--cream);
+  padding: 12px 24px;
+  border-radius: 100px;
+  font-size: 0.85rem;
+  z-index: 9998;
+  transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+  white-space: nowrap;
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<canvas id="particles"></canvas>
+<div class="cursor" id="cursor"></div>
+<div class="tooltip" id="tooltip"></div>
+
+<!-- NAV DOTS -->
+<nav class="nav-dots" id="navDots">
+  <div class="nav-dot active" onclick="scrollTo(0)" data-label="البداية"></div>
+  <div class="nav-dot" onclick="document.getElementById('rules').scrollIntoView({behavior:'smooth'})" data-label="القواعد"></div>
+  <div class="nav-dot" onclick="document.getElementById('stats').scrollIntoView({behavior:'smooth'})" data-label="الإحصائيات"></div>
+  <div class="nav-dot" onclick="document.getElementById('agree').scrollIntoView({behavior:'smooth'})" data-label="التوقيع"></div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="scroll-line"></div>
+  <div class="hero-eyebrow">وثيقة رسمية · النسخة 2.0</div>
+  <h1 class="hero-title">
+    تعاهد
+    <span>إستئناف إتفاقيتنا</span>
+  </h1>
+  <p class="hero-sub">معتمدة من المجلس الأعلى لقهوة الصباح ☕ ومجلس حماية العقول من السياسة</p>
+  <div class="hero-badge">⚡ نافذة فوراً بمجرد القراءة</div>
+  <div class="scroll-cta">
+    <span>تمرير للاكتشاف</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- RULES SECTION -->
+<section class="section reveal" id="rules">
+  <div class="section-label">القواعد المقدسة</div>
+  <h2 class="section-title">المحظورات والمستحبات</h2>
+
+  <div class="rules-grid">
+    <!-- FORBIDDEN -->
+    <div>
+      <div class="rules-col-title forbidden">🚫 ممنوع بالقانون والعقل</div>
+      <div class="rules-col forbidden" id="forbiddenCol">
+        <div class="rule-item" data-tip="حتى لو الكهرباء قطعت والكوفي برد — لا عذر 😤">
+          <span class="rule-emoji">😩</span>
+          <div><div class="rule-text">السلبية بكل أشكالها</div><div class="rule-sub">من ضمنها التذمر الصامت</div></div>
+        </div>
+        <div class="rule-item" data-tip="مخلوقات فيروسية تفسد كل محادثة 🪱">
+          <span class="rule-emoji">🪱</span>
+          <div><div class="rule-text">السياسة الطفيلية العبثية</div><div class="rule-sub">من أي لون أو طيف</div></div>
+        </div>
+        <div class="rule-item" data-tip="موضوع محجوز للعلماء والمتخصصين فقط 🌟">
+          <span class="rule-emoji">🌟</span>
+          <div><div class="rule-text">كل ما يخص شعب الله المختار</div><div class="rule-sub">أنتم تعرفون من نقصد</div></div>
+        </div>
+        <div class="rule-item" data-tip="أبطال ملاحم لا نحتاجها في حياتنا 🍊">
+          <span class="rule-emoji">🍊</span>
+          <div><div class="rule-text">ترامب ونظيره الغير مسمى</div><div class="rule-sub">حتى بالتلميح أو الكناية</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ALLOWED -->
+    <div>
+      <div class="rules-col-title allowed">✅ يُستحب بل يُفرض</div>
+      <div class="rules-col allowed" id="allowedCol">
+        <div class="rule-item" data-tip="حتى لو اخترعتوها — الإيجابية المصطنعة أفضل من السلبية الأصيلة ☀️">
+          <span class="rule-emoji">☀️</span>
+          <div><div class="rule-text">الإيجابية بكل أشكالها</div><div class="rule-sub">أصيلة أو مفبركة — كلها مقبولة</div></div>
+        </div>
+        <div class="rule-item" data-tip="بعلامات التنصيص للأمان من التطبيق الفعلي 📖">
+          <span class="rule-emoji">📖</span>
+          <div><div class="rule-text">نصائح ودروس حياتية</div><div class="rule-sub">بعلامات تنصيص وقائية</div></div>
+        </div>
+        <div class="rule-item" data-tip="لأن الضمير يستريح هناك يا صاحبي 🌆">
+          <span class="rule-emoji">🌆</span>
+          <div><div class="rule-text">الدوحة وجمالها</div><div class="rule-sub">بدون تأنيب الضمير هذه المرة</div></div>
+        </div>
+        <div class="rule-item" data-tip="كنز مخفي يستحق البحث رغم التضاريس الوعرة 🇩🇿">
+          <span class="rule-emoji">🇩🇿</span>
+          <div><div class="rule-text">إيجابيات المجتمع الجزائري</div><div class="rule-sub">رغم ندرتها المعروفة</div></div>
+        </div>
+        <div class="rule-item" data-tip="حتى فكرة شرب الماء بطريقة مختلفة — كلها تعدّ 💡">
+          <span class="rule-emoji">💡</span>
+          <div><div class="rule-text">أفكار إبداعية</div><div class="rule-sub">كبيرة أو صغيرة — كلها تُحتسب</div></div>
+        </div>
+        <div class="rule-item" data-tip="روح بلا فن كبيت بلا باب 🎨">
+          <span class="rule-emoji">🎨</span>
+          <div><div class="rule-text">كل ما يخص الفن الجميل</div><div class="rule-sub">من كل الأذواق والمدارس</div></div>
+        </div>
+        <div class="rule-item" data-tip="ذُكرت ثلاث مرات في الوثيقة الأصلية — فاهمين الإشارة 🌿">
+          <span class="rule-emoji">🌿</span>
+          <div><div class="rule-text">الطبيعة الطبيعة الطبيعة</div><div class="rule-sub">التكرار مقصود وضروري</div></div>
+        </div>
+        <div class="rule-item" data-tip="أفضل من الحيوانات البشرية بمراحل شوفها 🐱">
+          <span class="rule-emoji">🐱</span>
+          <div><div class="rule-text">الحيوانات الأليفة والمفترسة</div><div class="rule-sub">كلاهما أشرف من البديل</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS SECTION -->
+<div class="counter-section reveal" id="stats">
+  <div class="counter-title">إحصائيات الاتفاقية المخيفة</div>
+  <div class="counters">
+    <div class="counter-item">
+      <span class="counter-num" data-target="4">0</span>
+      <div class="counter-label">مواضيع محظورة بشدة</div>
+    </div>
+    <div class="counter-item">
+      <span class="counter-num" data-target="8">0</span>
+      <div class="counter-label">مواضيع مستحبة بحرارة</div>
+    </div>
+    <div class="counter-item">
+      <span class="counter-num" data-target="2">0</span>
+      <div class="counter-label">الإصدار الحالي للاتفاقية</div>
+    </div>
+    <div class="counter-item">
+      <span class="counter-num" data-target="100">0</span>
+      <div class="counter-label">٪ نسبة الالتزام المتوقعة</div>
+    </div>
+  </div>
+</div>
+
+<!-- PROGRESS BARS -->
+<div class="progress-section reveal">
+  <div class="progress-title">مستوى الإيجابية المتوقع بعد التوقيع</div>
+  <div class="progress-bar-wrap"><div class="progress-bar-fill" data-width="87"></div></div>
+  <div class="progress-label">الإيجابية العامة — 87٪</div>
+
+  <div style="margin-top:1.2rem">
+  <div class="progress-title">احتمالية عدم خرق الاتفاقية في أول أسبوع</div>
+  <div class="progress-bar-wrap"><div class="progress-bar-fill" data-width="23"></div></div>
+  <div class="progress-label">الالتزام الفعلي — 23٪ (واقعية مُحزنة)</div>
+  </div>
+
+  <div style="margin-top:1.2rem">
+  <div class="progress-title">كمية القطط في المحادثة بعد التوقيع</div>
+  <div class="progress-bar-wrap"><div class="progress-bar-fill" data-width="96" style="background: linear-gradient(to left, #ff9a9e, #fad0c4);"></div></div>
+  <div class="progress-label">محتوى قطط — 96٪ (ممتاز)</div>
+  </div>
+</div>
+
+<!-- AGREE SECTION -->
+<section class="agree-section reveal" id="agree">
+  <div class="agree-glow"></div>
+  <h2 class="agree-title">هل أنت مستعد للتعاهد؟</h2>
+  <p class="agree-sub">التوقيع ملزم قانونيًا وأخلاقيًا وفلسفيًا وكونيًا</p>
+  <button class="agree-btn" id="agreeBtn" onclick="handleAgree()">
+    <span>✍️</span>
+    <span id="agreeBtnText">أوافق على هذا التعاهد</span>
+  </button>
+  <p style="margin-top:1rem; font-size:0.75rem; color:var(--text-dim); font-style:italic;">
+    * بالضغط تقر بأنك قرأت وفهمت وستنسى كل شيء في نفس اليوم
+  </p>
+</section>
+
+<!-- MEME SECTION -->
+<section class="meme-section" id="memeSection">
+  <div class="meme-header">
+    <div class="section-label">جائزة الالتزام</div>
+    <h2 style="font-family:'Amiri',serif; font-size:1.8rem; color:var(--cream); margin-top:0.5rem;">ميم احتفالي مجاني 🎉</h2>
+  </div>
+
+  <div class="meme-card" id="memeCard">
+    <div class="meme-card-inner">
+      <span class="meme-big-emoji" id="memeEmoji">🐱</span>
+      <div class="meme-text" id="memeText">جارٍ تحميل الحكمة...</div>
+      <div class="meme-author" id="memeAuthor"></div>
+    </div>
+  </div>
+
+  <div class="meme-actions">
+    <button class="meme-btn primary" onclick="generateMeme()">🔄 ميم جديد</button>
+    <button class="meme-btn" onclick="shareMeme()">📤 مشاركة</button>
+  </div>
+
+  <div style="margin-top:1.5rem; margin-bottom:0.8rem; font-size:0.75rem; color:var(--text-dim); letter-spacing:2px; text-transform:uppercase; text-align:center;">
+    اختر الفئة
+  </div>
+  <div class="meme-mini-row" id="miniRow"></div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div>مُختوم بالشمع الجزائري الأصيل · ٢٠٢٥</div>
+  <div style="margin-top:6px; font-size:1.2rem">🔏</div>
+  <div style="margin-top:8px; color:#5a5040">المجلس الأعلى لمكافحة السلبية والسياسة الطفيلية</div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ─── PARTICLES ───
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+let W, H, pts = [];
+
+function initCanvas() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+
+function mkPt() {
+  return {
+    x: Math.random() * W, y: Math.random() * H,
+    vx: (Math.random() - 0.5) * 0.3,
+    vy: (Math.random() - 0.5) * 0.3,
+    r: Math.random() * 1.5 + 0.3,
+    a: Math.random()
+  };
+}
+
+function initPts() { pts = Array.from({length: 60}, mkPt); }
+
+function animPts() {
+  ctx.clearRect(0, 0, W, H);
+  pts.forEach(p => {
+    p.x += p.vx; p.y += p.vy;
+    if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
+    if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(201,168,76,${p.a * 0.4})`;
+    ctx.fill();
+  });
+  // connections
+  for (let i = 0; i < pts.length; i++) {
+    for (let j = i + 1; j < pts.length; j++) {
+      const dx = pts[i].x - pts[j].x, dy = pts[i].y - pts[j].y;
+      const d = Math.sqrt(dx*dx + dy*dy);
+      if (d < 100) {
+        ctx.beginPath();
+        ctx.moveTo(pts[i].x, pts[i].y);
+        ctx.lineTo(pts[j].x, pts[j].y);
+        ctx.strokeStyle = `rgba(201,168,76,${(1-d/100)*0.15})`;
+        ctx.lineWidth = 0.5;
+        ctx.stroke();
+      }
+    }
+  }
+  requestAnimationFrame(animPts);
+}
+
+initCanvas(); initPts(); animPts();
+window.addEventListener('resize', () => { initCanvas(); initPts(); });
+
+// ─── CURSOR ───
+const cursor = document.getElementById('cursor');
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top = e.clientY + 'px';
+});
+document.addEventListener('mousedown', () => cursor.classList.add('click'));
+document.addEventListener('mouseup', () => cursor.classList.remove('click'));
+
+// ─── TOOLTIP ───
+const tooltip = document.getElementById('tooltip');
+document.querySelectorAll('[data-tip]').forEach(el => {
+  el.addEventListener('mouseenter', e => {
+    tooltip.textContent = el.dataset.tip;
+    tooltip.classList.add('show');
+  });
+  el.addEventListener('mousemove', e => {
+    tooltip.style.left = (e.clientX + 16) + 'px';
+    tooltip.style.top = (e.clientY - 10) + 'px';
+  });
+  el.addEventListener('mouseleave', () => tooltip.classList.remove('show'));
+});
+
+// ─── FLOATING EMOJI ON CLICK ───
+const floatEmojis = ['✨','💛','🌟','⭐','🎉','💫','🌿','🐱','☀️','💡'];
+document.addEventListener('click', e => {
+  if (e.target.closest('.rule-item')) {
+    const em = document.createElement('div');
+    em.className = 'float-emoji';
+    em.textContent = floatEmojis[Math.floor(Math.random() * floatEmojis.length)];
+    em.style.left = e.clientX + 'px';
+    em.style.top = e.clientY + 'px';
+    document.body.appendChild(em);
+    setTimeout(() => em.remove(), 3000);
+  }
+});
+
+// ─── SCROLL REVEAL ───
+const revealEls = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      e.target.style.transitionDelay = (i * 0.1) + 's';
+      e.target.classList.add('in');
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.15 });
+revealEls.forEach(el => io.observe(el));
+
+// ─── COUNTERS ───
+const counterEls = document.querySelectorAll('.counter-num');
+const cio = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      animCounter(e.target);
+      cio.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.5 });
+counterEls.forEach(el => cio.observe(el));
+
+function animCounter(el) {
+  const target = +el.dataset.target;
+  let cur = 0;
+  const step = Math.ceil(target / 40);
+  const t = setInterval(() => {
+    cur = Math.min(cur + step, target);
+    el.textContent = cur + (target === 100 ? '٪' : '');
+    if (cur >= target) clearInterval(t);
+  }, 40);
+}
+
+// ─── PROGRESS BARS ───
+const progressEls = document.querySelectorAll('.progress-bar-fill');
+const pio = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      setTimeout(() => { e.target.style.width = e.target.dataset.width + '%'; }, 300);
+      pio.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.5 });
+progressEls.forEach(el => pio.observe(el));
+
+// ─── NAV DOTS ───
+const sections = ['hero','rules','stats','agree'];
+const dots = document.querySelectorAll('.nav-dot');
+window.addEventListener('scroll', () => {
+  let cur = 0;
+  sections.forEach((id, i) => {
+    const el = document.getElementById(id);
+    if (el && window.scrollY >= el.offsetTop - 300) cur = i;
+  });
+  dots.forEach((d, i) => d.classList.toggle('active', i === cur));
+});
+
+// ─── MEMES DATA ───
+const memeCategories = [
+  {
+    label: 'قطط وحيوانات', emoji: '🐱',
+    memes: [
+      { e: '🐱', t: 'قيل: الحيوانات الأليفة أفضل من الحيوانات البشرية\n\nلا تعليق — الحكمة تكفي عن نفسها', a: '— الاتفاقية، البند الثامن' },
+      { e: '🐶', t: 'كلبي:\n✅ لا يحكي في السياسة\n✅ لا يعرف ترامب\n✅ لا يشكو من الحياة\n\nكلبي أحكم مني بعشر سنوات', a: '— حقيقة علمية لا جدال فيها' },
+      { e: '🐦', t: 'العصفور يغني كل صباح\nبدون سياسة\nبدون تذمر\nبدون أخبار\n\nنحن البشر الغلطة 🤷', a: '— فيلسوف لم يُعرف بعد' },
+    ]
+  },
+  {
+    label: 'جزائر وإيجابية', emoji: '🇩🇿',
+    memes: [
+      { e: '🇩🇿', t: 'دور على إيجابية في المجتمع الجزائري...\n*يبحث بشدة*\n*يبحث أكثر*\n...\n.وجدتها! الكروسان الصباحي لازال موجود ✅', a: '— مواطن متفائل بالقوة' },
+      { e: '☀️', t: 'أنا إيجابي جداً\nإيجابياً أكيد الكهرباء راح تنقطع 🕯️\nوإيجابياً الموبايل مشحون\nالإيجابية الجزائرية 100٪', a: '— خبرة عشرين سنة' },
+      { e: '🥐', t: 'إيجابيات المجتمع الجزائري:\n١. الكروسان\n٢. القهوة\n٣. الشمس دايمًا موجودة\n٤. ...\n\nهيا — ثلاثة كافية', a: '— لجنة إحصاء الإيجابيات' },
+    ]
+  },
+  {
+    label: 'سياسة ممنوعة', emoji: '🚫',
+    memes: [
+      { e: '🚫', t: 'صاحبي: علاش ما تحكيش في السياسة؟\n\nأنا: الاتفاقية 2.0 البند الثاني 📜\n\nصاحبي: هههه بس—\n\nأنا: أعيد — البند الثاني يا أخي', a: '— حوار فعلي موثق' },
+      { e: '🪱', t: 'السياسة الطفيلية:\nتدخل المحادثة بدون إذن\nتأكل وقتنا\nتخرج بلا حل\n\nالطفيليات الحقيقية أشرف', a: '— علم الطفيليات المقارن' },
+      { e: '🍊', t: 'التلميح المحظور:\nأ....\nتر...\nترا...\n\nلا — الاتفاقية واضحة. حتى بالحروف الأولى ممنوع', a: '— المادة الرابعة، الفقرة الأولى' },
+    ]
+  },
+  {
+    label: 'طبيعة وفن', emoji: '🌿',
+    memes: [
+      { e: '🌿', t: 'الطبيعة الطبيعة الطبيعة\n\n(ذُكرت ثلاث مرات في الاتفاقية)\n\nالمطلوب: صورة شجرة الآن\nفوراً\nبدون تفكير', a: '— البند السابع، فقرة الطبيعة ×٣' },
+      { e: '🎨', t: 'روح بلا فن:\n❌ كبيت بلا باب\n❌ كقهوة بلا سكر\n❌ كمحادثة بسياسة\n\nالفن واجب وطني', a: '— الفيلسوف المجهول' },
+      { e: '🌊', t: 'الطبيعة لا تشكو\nالطبيعة لا تتذمر\nالطبيعة لا تنشر أخبار سياسية\n\nكن كالطبيعة', a: '— حكمة الأشجار' },
+    ]
+  },
+  {
+    label: 'الدوحة والغربة', emoji: '🌆',
+    memes: [
+      { e: '🌆', t: 'الدوحة جميلة\nبدون تأنيب ضمير\nطاحت علينا الكيف يا ربي\n\nالاتفاقية تحميك من الشعور بالذنب', a: '— البند الثالث، بعلامات التنصيص' },
+      { e: '🏙️', t: 'في الدوحة:\n☀️ الشمس تشرق 365 يوم\n🌡️ 45 درجة بس — "جو ممتاز"\n✅ بدون تأنيب ضمير بموجب الاتفاقية', a: '— وكالة أرصاد متفائلة' },
+    ]
+  }
+];
+
+let currentCat = 0;
+
+function buildMiniRow() {
+  const row = document.getElementById('miniRow');
+  row.innerHTML = memeCategories.map((c, i) =>
+    `<div class="meme-mini ${i===currentCat?'active':''}" onclick="selectCat(${i})">
+      <span class="mini-emoji">${c.emoji}</span>
+      <span class="mini-label">${c.label}</span>
+    </div>`
+  ).join('');
+}
+
+function selectCat(i) {
+  currentCat = i;
+  buildMiniRow();
+  generateMeme();
+}
+
+function generateMeme() {
+  const cat = memeCategories[currentCat];
+  const m = cat.memes[Math.floor(Math.random() * cat.memes.length)];
+  const emoji = document.getElementById('memeEmoji');
+  const text = document.getElementById('memeText');
+  const author = document.getElementById('memeAuthor');
+  // re-trigger animation
+  emoji.style.animation = 'none';
+  void emoji.offsetWidth;
+  emoji.style.animation = '';
+  emoji.textContent = m.e;
+  text.textContent = m.t;
+  author.textContent = m.a;
+}
+
+function shareMeme() {
+  const text = document.getElementById('memeText').textContent;
+  if (navigator.share) {
+    navigator.share({ text: text + '\n\n— تعاهد: الاتفاقية 2.0' });
+  } else {
+    navigator.clipboard.writeText(text).then(() => showToast('تم نسخ الميم! 📋'));
+  }
+}
+
+// ─── CONFETTI ───
+function launchConfetti() {
+  const colors = ['#c9a84c','#f0d080','#8a6d2a','#e0f0a0','#ff9a9e','#fad0c4'];
+  for (let i = 0; i < 80; i++) {
+    setTimeout(() => {
+      const p = document.createElement('div');
+      p.className = 'confetti-piece';
+      p.style.cssText = `
+        left:${Math.random()*100}vw;
+        top:-10px;
+        background:${colors[Math.floor(Math.random()*colors.length)]};
+        transform:rotate(${Math.random()*360}deg);
+        animation-duration:${2+Math.random()*2}s;
+        animation-delay:0s;
+        border-radius:${Math.random()>0.5?'50%':'2px'};
+      `;
+      document.body.appendChild(p);
+      setTimeout(() => p.remove(), 4000);
+    }, i * 30);
+  }
+}
+
+// ─── TOAST ───
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ─── AGREE ───
+let agreed = false;
+function handleAgree() {
+  if (agreed) { generateMeme(); showToast('ميم جديد من الشيف! 🎨'); return; }
+  agreed = true;
+  const btn = document.getElementById('agreeBtn');
+  btn.classList.add('agreed');
+  btn.innerHTML = '<span>✅</span><span>تم التوقيع — بارك الله فيك!</span>';
+  launchConfetti();
+  showToast('مرحباً بك في نادي الإيجابية الإلزامية 🎉');
+  setTimeout(() => {
+    const ms = document.getElementById('memeSection');
+    ms.classList.add('visible');
+    ms.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    buildMiniRow();
+    generateMeme();
+  }, 800);
+}
+</script>
+</body>
+</html>
